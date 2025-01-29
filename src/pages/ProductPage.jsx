@@ -1,95 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ProductForm from "../components/ProductForm";
-import { PostMethod } from "../hooks/useFetch";
+import { getProduct, saveProduct } from "../services/ProductService";
+import SearchProductComponent from "../components/SearchProductComponent";
 
 const ProductPage = () => {
   const [produtosLista, setProdutosLista] = useState([]);
   const [produtosPesquisados, setProdutosPesquisados] = useState([]);
-  const saveProduct = async (e) => {
-    e.preventDefault();
-    const getElId = (id) => document.getElementById(id);
-    const nome = getElId("name").value.trim();
-    const valor = parseFloat(getElId("price").value);
-    const description = getElId("description").value.trim();
-    const category = getElId("category").value;
-    const quantidade = parseInt(getElId("stock").value, 10);
-
-    if (
-      !nome ||
-      isNaN(valor) ||
-      !description ||
-      !category ||
-      isNaN(quantidade)
-    ) {
-      alert("Please fill out all fields correctly.");
-      return;
-    }
-
-    const product = { nome, valor, description, category, quantidade };
-
-    PostMethod(product);
-  };
-
-  const requisition = async () => {
-    const [produtos] = await Promise.all([
-      fetch("http://localhost:8080/api/produto"),
-    ]);
-    const produtosData = await produtos.json();
-    setProdutosLista(() => [...produtosData]);
-    console.log(produtosData);
-  };
-
-  const selecionarProduto = (id) => {
-    const [produto] = produtosLista.filter((produto) => produto.id === id);
-    console.log(produto);
-    const getElId = (id) => document.getElementById(id);
-    const quantidade = produto.estoque.estoqueMovimentoEntity.reduce(
-      (acc, movimento) => {
-        return movimento.quantidade + acc;
-      },
-      0
-    );
-    const entradas = produto.estoque.estoqueMovimentoEntity.reduce(
-      (acc, movimento) => {
-        if (movimento.tipo === "ENTRADA") {
-          return movimento.quantidade + acc;
-        }
-        return acc;
-      },
-      0
-    );
-    const saidas = produto.estoque.estoqueMovimentoEntity.reduce(
-      (acc, movimento) => {
-        if (movimento.tipo === "SAIDA") {
-          return movimento.quantidade - acc;
-        }
-        return acc;
-      },
-      0
-    );
-    getElId("name").value = produto.nome.trim();
-    parseFloat((getElId("price").value = produto.valor));
-    getElId("description").value = produto.description?.trim();
-    getElId("category").value = produto.estoque.categoria;
-    getElId("stock").value = parseInt(produto.estoque.quantidade, 10);
-    getElId("estoque-quantidade").textContent = quantidade;
-    getElId("estoque-entradas").textContent = entradas;
-    getElId("estoque-saidas").textContent = saidas;
-    produto.estoque.estoqueMovimentoEntity.quantidade;
-    console.log();
-  };
-
-  const pesquisaProduto = (e) => {
-    console.log(e.target.value);
-    const pesquisaResultado = produtosLista.filter((produto) =>
-      produto.nome.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setProdutosPesquisados(() => [...pesquisaResultado]);
-    console.log(pesquisaResultado);
-  };
-  useEffect(() => {
-    requisition();
-  }, []);
 
   return (
     <>
@@ -140,38 +56,17 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        <ProductForm saveProduct={saveProduct} />
+        <ProductForm
+          saveProduct={saveProduct}
+          setProductsList={setProdutosLista}
+        />
       </section>
-      <section>
-        <form
-          action=""
-          id="form-container"
-          className="row-1 b-1 col-4 m-3 p-1 b-0"
-        >
-          <div className="w-1 flex-row">
-            <input onChange={(e) => pesquisaProduto(e)} />
-            <button id="btn-2">Persquisar</button>
-          </div>
-        </form>
-        <div id="container-6-col" className="col-4 m-3">
-          {produtosPesquisados.map((produto) => (
-            <div
-              onClick={() => selecionarProduto(produto.id)}
-              key={produto.id}
-              className="p-1 bg-secondary radius"
-            >
-              <div>
-                <span>Produto: </span>
-                <h3>{produto.nome}</h3>
-              </div>
-              <div>
-                <span>Preço: </span>
-                <p>{produto.valor}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <SearchProductComponent
+        setProdutosLista={setProdutosLista}
+        listaParaPesquisa={produtosLista}
+        pesquisados={produtosPesquisados}
+        setPesquisados={setProdutosPesquisados}
+      />
     </>
   );
 };

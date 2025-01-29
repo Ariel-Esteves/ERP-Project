@@ -38,8 +38,9 @@ ul
 #container-6-col
   display: grid
   grid-template-columns: repeat(6, 1fr)
-  grid-auto-rows: 1fr
-  gap: $gap-size
+  gap: calc($margin-base-4 / 2 )
+  grid-template-rows: repeat(3, minmax(10rem, auto)) // Define a minimum number of rows
+
 
 
 
@@ -48,10 +49,24 @@ ul
   grid-template-columns: repeat(4, 1fr)
   grid-auto-rows: 1fr
   gap: $margin-base-4
+  
+.gap-1
+  gap: $margin-base-1!important
+.gap-2
+  gap: $margin-base-2!important
+.gap-3
+  gap: $margin-base-3!important
+
+.gap-4
+  gap: $margin-base-4!important
+
+.auto-row-h-auto
+  grid-auto-rows: auto!important
 
 .flex-row
   display: flex
   flex-direction: row
+  width: 100%
   justify-content: space-between
   align-items: center
   >span, div
@@ -70,8 +85,6 @@ ul
 .flex-col
   display: flex
   flex-direction: column
-  justify-content: space-between
-
 
 .row-1
   grid-row: 1/2
@@ -99,17 +112,17 @@ ul
 
   
 .col-1
-  grid-column: span 1
+  grid-column: span 1!important
 
 .col-2
-  grid-column: span 2
+  grid-column: span 2!important
 
 
 .col-3
-  grid-column: span 3
+  grid-column: span 3!important
 
 .col-4
-  grid-column: span 4
+  grid-column: span 4!important
 
 .p-0
   padding: 0 !important
@@ -150,26 +163,26 @@ ul
   padding-right: calc(1 * $basic-padding)
   
 .fs-1
-  font-size: calc( 1.5 * $font-sz )
+  font-size: calc( 1 * $font-sz )!important
   padding: 0
   margin: 0
 .fs-2
-  font-size: calc( 2 * $font-sz )
+  font-size: calc( 2 * $font-sz )!important
   padding: 0
   margin: 0
 
 .fs-3
-  font-size: calc( 3 * $font-sz )
+  font-size: calc( 3 * $font-sz )!important
   padding: 0
   margin: 0
 
 .fs-4
-  font-size: calc( 4 * $font-sz )
+  font-size: calc( 4 * $font-sz )!important
   padding: 0
   margin: 0
 
 .fs-5
-  font-size: calc( 5 * $font-sz )
+  font-size: calc( 5 * $font-sz )!important
   padding: 0
   margin: 0
 
@@ -210,13 +223,13 @@ ul
   margin: $margin-base-1!important
 
 .m-2
-  margin: $margin-base-2
+  margin: $margin-base-2!important
 
 .m-3
-  margin: $margin-base-3
+  margin: $margin-base-3!important
 
 .m-4
-  margin: $margin-base-4
+  margin: $margin-base-4!important
 
 .mt-0
   margin-top: 0 !important
@@ -268,7 +281,7 @@ ul
   margin-bottom: $margin-base-3
 
 .mb-4
-  margin-bottom: $margin-base-4
+  margin-bottom: $margin-base-4!important
 
 .ml-0
   margin-left: 0 !important
@@ -303,11 +316,34 @@ ul
 .w-100
   width: 100%
 
+.w-33
+  width: 33%
+
+.w-50
+  width: 50%
+
+.w-83
+  width: 83%
+
 .h-100
   height: 100%
 
 .h-auto
   height: auto
+
+.h-1
+  height: 20rem!important
+
+.h-2
+  height: 30rem!important
+
+.h-3
+  height: 40rem!important
+  overflow: scroll
+  overflow-x: hidden
+
+.h-4
+  height: 50rem!important
 
 .mx-auto
   margin: 0 auto
@@ -327,8 +363,13 @@ ul
 .mx-5
   margin: 0 $margin-base-5
 
+.shadow-none
+  box-shadow: none!important
 .relative
   position: relative
+ 
+.inline-block
+  display: inline-block
 
 .absolute
   position: absolute
@@ -381,7 +422,7 @@ ul
 
 #form-container
   display: grid
-  grid-template-columns: repeat(2, 1fr)
+  grid-template-columns: repeat(4, 1fr)
   gap: $gap-size
   border-radius: $radius
   background-color: white
@@ -393,7 +434,7 @@ ul
     padding: calc(0.12 * $basic-padding)
     input,select,textarea
       width: 100%
-      background-color: transparent
+      background-color: transparent!important
       border: 0
       border-bottom: 1px solid $text-color-1
       color: $text-color-1
@@ -420,6 +461,12 @@ ul
     top: 50%
     left: 50%
     transform: translate(-50%, -50%)
+  
+.left-top
+  position: absolute
+  top: 0%
+  left: 25%
+  transform: translate(-50%, -50%)
    
 .bg-secondary
   background-color: $bg-secondary

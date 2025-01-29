@@ -1,30 +1,40 @@
+import PropTypes from "prop-types";
+
 const EntityForm = ({ section, setSection, saveEntidade }) => {
   return (
     <form id="form-container" className="ml-0">
-      <div>
+      <div className="col-4">
         <span>Entidade</span>
         <h2>Cradastre-se agora</h2>
         <p>Preencha o formulário abaixo</p>
       </div>
-      <div style={section != 1 ? { display: "none" } : {}}>
-        <div>
+      <div
+        id="form-container"
+        className="col-4 m-0 p-0 shadow-none"
+        style={section != 1 ? { display: "none" } : {}}
+      >
+        <div className="col-4">
           <label htmlFor="nome">nome</label>
           <input type="text" id="nome" />
-        </div>
-        <div>
-          <label htmlFor="cpf">cpf</label>
-          <input type="text" id="cpf" />
         </div>
         <div>
           <label htmlFor="email">Email</label>
           <input type="email" id="email" />
         </div>
         <div>
+          <label htmlFor="cpf">cpf</label>
+          <input type="text" id="cpf" />
+        </div>
+        <div>
           <label htmlFor="tipo">Tipo</label>
           <input type="text" id="tipo" />
         </div>
       </div>
-      <div style={section != 2 ? { display: "none" } : {}}>
+      <div
+        id="form-container"
+        className="col-4 m-0 shadow-none"
+        style={section != 2 ? { display: "none" } : {}}
+      >
         <div>
           <label htmlFor="uf">UF</label>
           <input type="text" id="uf" />
@@ -84,6 +94,12 @@ const EntityForm = ({ section, setSection, saveEntidade }) => {
       </div>
     </form>
   );
+};
+
+EntityForm.propTypes = {
+  section: PropTypes.number.isRequired,
+  setSection: PropTypes.func.isRequired,
+  saveEntidade: PropTypes.func.isRequired,
 };
 
 export default EntityForm;

@@ -6,6 +6,7 @@ import ProductPage from "./pages/ProductPage";
 import UserPage from "./pages/UserPage";
 import PersonalPage from "./pages/PersonalPage";
 import StockPage from "./pages/StockPage";
+import AboutPage from "./pages/AboutPage";
 
 const RouterApp = () => {
   return (
@@ -19,6 +20,7 @@ const RouterApp = () => {
       <Route path="/login" element={<UserPage />} />
       <Route path="/user/:id" element={<PersonalPage />} />
       <Route path="/stock" element={<StockPage />} />
+      <Route path="/sobre" element={<AboutPage />} />
     </Routes>
   );
 };

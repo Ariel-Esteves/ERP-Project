@@ -1,8 +1,8 @@
-export async function PostMethod(product) {
+export async function PostMethod(entity, url) {
   try {
-    const response = await fetch("http://localhost:8080/api/produto", {
+    const response = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(product),
+      body: JSON.stringify(entity),
       headers: {
         "Content-Type": "application/json",
       },

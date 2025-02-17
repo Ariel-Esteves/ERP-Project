@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EntityForm from "../components/EntityForm";
 import { getEntidade, saveEntidade } from "../services/EntityService";
 import SearchEntityComponent from "../components/SearchEntityComponent";
@@ -6,14 +6,6 @@ import CarteiraComponent from "../components/CarteiraComponent";
 
 const EntityPage = () => {
   const [section, setSection] = useState(1);
-  const [entidadesLista, setEntidadesLista] = useState([]);
-  const [entidadesPesquisadas, setEntidadesPesquisadas] = useState([]);
-
-  const fetchData = async () => setEntidadesLista(await getEntidade());
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -37,11 +29,7 @@ const EntityPage = () => {
           />
         </div>
       </div>
-      <SearchEntityComponent
-        listaParaPesquisa={entidadesLista}
-        pesquisados={entidadesPesquisadas}
-        setPesquisados={setEntidadesPesquisadas}
-      />
+      <SearchEntityComponent requestMethod={getEntidade} />
       <CarteiraComponent />
     </>
   );

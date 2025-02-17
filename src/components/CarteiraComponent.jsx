@@ -1,36 +1,34 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { findWalletByPersonId } from "../hooks/RequestApi/walletRequest";
 
-const CarteiraComponent = () => {
-  const [carteira, setCarteira] = useState({});
+const CarteiraComponent = ({ wallet_id }) => {
+  const [balance, setBalance] = useState(0);
+  const [entry, setEntry] = useState(0);
+  const [exit, setExit] = useState(0);
 
-  const getCarteira = async () => {
-    const [carteira] = await Promise.all([
-      (await fetch("http://localhost:8080/api/carteira/1")).json(),
-    ]);
-    setCarteira(() => carteira);
-
-    const entradas = carteira.carteiraMovimentoEntity.reduce(
-      (acc, movimento) => {
-        console.log(movimento.tipo);
-        return movimento.tipo == "ENTRADA" ? (acc += movimento.valor) : acc;
-      },
-      0
-    );
-
-    const saidas = carteira.carteiraMovimentoEntity.reduce((acc, movimento) => {
-      return movimento.tipo == "SAIDA" ? (acc += movimento.valor) : acc;
+  const movementOperation = (request, mov) =>
+    request.movement.reduce((acc, movimento) => {
+      return movimento.in == mov ? (acc += movimento.valor) : acc;
     }, 0);
 
-    document.getElementById("carteira-entradas").innerText = entradas;
-    document.getElementById("carteira-saidas").innerText = saidas;
+  const getPayments = async () => {
+    const response = await findWalletByPersonId(wallet_id);
+
+    setEntry(movementOperation(response, "in"));
+    setExit(movementOperation(response, "out"));
+
+    setBalance(entry - exit);
   };
 
   useEffect(() => {
-    getCarteira();
-  }, []);
+    wallet_id && getPayments();
+  });
+
+  if (wallet_id === undefined) return null;
 
   return (
-    <div className="w-1 radius p-2 bg-secondary">
+    <div className=" radius p-2 bg-secondary">
       <div className="col-4">
         <h3 className="fs-3">Carteira</h3>
       </div>
@@ -40,7 +38,7 @@ const CarteiraComponent = () => {
             <p className="fs-1">Saldo:</p>
           </div>
           <span className="fs-2" id="carteira-saldo">
-            {carteira.valor}
+            {balance}
           </span>
         </div>
         <div className="col-4 relative inline-block">
@@ -48,7 +46,7 @@ const CarteiraComponent = () => {
             <span className="fs-1">Entradas:</span>
           </div>
           <p className="fs-2" id="carteira-entradas">
-            100
+            {entry}
           </p>
         </div>
         <div className="col-4 relative inline-block">
@@ -56,12 +54,16 @@ const CarteiraComponent = () => {
             <span className="fs-1">Saídas:</span>
           </div>
           <p id="carteira-saidas" className="fs-2">
-            0
+            {exit}
           </p>
         </div>
       </div>
     </div>
   );
+};
+
+CarteiraComponent.propTypes = {
+  wallet_id: PropTypes.string.isRequired,
 };
 
 export default CarteiraComponent;

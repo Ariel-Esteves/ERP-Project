@@ -1,4 +1,4 @@
-import { PostMethod } from "./useFetch";
+import { postSale } from "./RequestApi/saleRequest";
 
 export default async function FinalizationRegistrySale(
   e,
@@ -7,14 +7,16 @@ export default async function FinalizationRegistrySale(
   total
 ) {
   e.preventDefault();
-  console.log(total, "toral");
-  const entidade_id = document.getElementById("entidade-select").value;
-  const entidade = entidades.find((entidade) => entidade.id == entidade_id);
+  console.log(total, "total");
+  const entity_id = document.getElementById("person").value;
+  const person = entidades.find((entidade) => entidade.id == entity_id);
+
   const body = {
-    valor: total,
-    tipoVenda: { nome: "teste" },
-    entidade,
-    vendaMovimento: carrinhoProdutos,
+    paymentValue: total,
+    saleType: 1,
+    person: person.id,
+    movementSale: carrinhoProdutos,
   };
-  PostMethod(body, "http://localhost:8080/api/vendas");
+
+  postSale(body);
 }

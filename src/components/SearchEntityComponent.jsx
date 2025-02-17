@@ -1,21 +1,29 @@
-import selecionarProduto from "../hooks/selectProduct";
-import pesquisaCadastro from "../hooks/PesquisaCadastro";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const SearchProductComponent = ({
-  listaParaPesquisa,
-  pesquisados,
-  setPesquisados,
-}) => {
+import ProductCardComponent from "./ProductCardComponent";
+import searchData from "../hooks/searchData";
+
+const SearchEntityComponent = ({ requestMethod }) => {
+  const [listSearched, setListSearched] = useState([]);
+  const [listToSearch, setListToSearch] = useState([]);
+
+  const getListElement = async () => {
+    const list = await requestMethod();
+    setListToSearch(list);
+  };
+  useEffect(() => {
+    getListElement();
+    console.log("listToSearch: ", listToSearch);
+  }, []);
+
   return (
     <div id="container-4-col" className="auto-row-h-auto">
       <form id="form-container" className="col-4 p-1 mb-0">
         <div className="flex-row w-50">
           <input
             type="text"
-            onChange={(e) =>
-              pesquisaCadastro(e, listaParaPesquisa, setPesquisados)
-            }
+            onChange={(e) => searchData(e, listToSearch, setListSearched)}
           />
           <div className="flex-row">
             <button id="btn-2">
@@ -26,31 +34,14 @@ const SearchProductComponent = ({
       </form>
       <div id="container-4-col" className="col-4 mx-4 mb-4 bg-primary ">
         <div className="col-4 radius h-3 p-4" id="container-4-col">
-          {pesquisados.map((produto) => (
-            <div
-              onClick={() => selecionarProduto(produto.id)}
-              key={produto.id}
-              className="p-1 bg-secondary radius"
-            >
-              <div>
-                <span>Produto: </span>
-                <h3>{produto.nome}</h3>
-              </div>
-              <div>
-                <span>Preço: </span>
-                <p>{produto.valor}</p>
-              </div>
-            </div>
-          ))}
+          {ProductCardComponent(listSearched)}
         </div>
       </div>
     </div>
   );
 };
-SearchProductComponent.propTypes = {
-  listaParaPesquisa: PropTypes.array.isRequired,
-  pesquisados: PropTypes.array.isRequired,
-  setPesquisados: PropTypes.func.isRequired,
+SearchEntityComponent.propTypes = {
+  requestMethod: PropTypes.func.isRequired,
 };
 
-export default SearchProductComponent;
+export default SearchEntityComponent;

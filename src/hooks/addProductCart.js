@@ -1,11 +1,13 @@
-export default function addProductCart(e, produtos, setCarrinhoProdutos) {
+export default function addProductCart(e, products, setCarrinhoProducts) {
   e.preventDefault();
-  const produto_id = document.getElementById("produto-select").value;
-  const produto = produtos.find((produto) => produto.id == produto_id);
-  const valor = document.getElementById("preco").value;
-  const quantidade = document.getElementById("quantidade").value;
-  setCarrinhoProdutos((prevState) => [
+  const product = document.getElementById("product").value;
+  const paymentValue = document.getElementById("price").value;
+  const productInf = products.find((prod) => prod.id == product);
+
+  const quantity = document.getElementById("quantity").value;
+  console.log({ productInf, product, paymentValue, quantity });
+  setCarrinhoProducts((prevState) => [
     ...prevState,
-    { produto_id, produto, valor, quantidade },
+    { productInf, product, paymentValue, quantity },
   ]);
 }

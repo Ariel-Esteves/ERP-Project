@@ -1,12 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
 import ProductForm from "../components/ProductForm";
 import { getProduct, saveProduct } from "../services/ProductService";
-import SearchProductComponent from "../components/SearchProductComponent";
+import SearchEntityComponent from "../components/SearchEntityComponent";
 
 const ProductPage = () => {
-  const [produtosLista, setProdutosLista] = useState([]);
-  const [produtosPesquisados, setProdutosPesquisados] = useState([]);
-
   return (
     <>
       <section id="container-4-col">
@@ -56,17 +52,9 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        <ProductForm
-          saveProduct={saveProduct}
-          setProductsList={setProdutosLista}
-        />
+        <ProductForm saveProduct={saveProduct} />
       </section>
-      <SearchProductComponent
-        setProdutosLista={setProdutosLista}
-        listaParaPesquisa={produtosLista}
-        pesquisados={produtosPesquisados}
-        setPesquisados={setProdutosPesquisados}
-      />
+      <SearchEntityComponent requestMethod={getProduct} />
     </>
   );
 };

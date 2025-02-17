@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      {/*<HomePage />*/}
+
       <RouterApp />
 
       <FooterComponent />

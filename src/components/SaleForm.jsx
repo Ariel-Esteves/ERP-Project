@@ -1,6 +1,8 @@
 import addProductCart from "../hooks/addProductCart";
 import FinalizationRegistrySale from "../hooks/finalizationRegistrySale";
 import PropTypes from "prop-types";
+import PersonComponent from "./PersonComponent";
+import ProductListComponent from "./ProductListComponent";
 
 const SaleForm = ({
   entidades,
@@ -10,41 +12,34 @@ const SaleForm = ({
   total,
 }) => {
   return (
-    <form action="" id="form-container" className="col-2 ml-0">
-      <div>
-        <label htmlFor="entidade">Entidade</label>
-        <select id="entidade-select">
-          {entidades.map((entidade) => (
-            <option key={entidade.id} value={entidade.id}>
-              {entidade.nome}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="data">Data</label>
-        <input className=" input-1 " type="date" id="data" />
-      </div>
-      <div id="container-2">
+    <form action="container-4-col" className="col-4 mx-1">
+      <div id="form-container-8-col" className="m-0 py-2 col-4">
         <div className="col-1">
-          <label htmlFor="produto"> Produto</label>
-          <select id="produto-select">
-            {produtos.map((produto) => (
-              <option key={produto.id} value={produto.id}>
-                {produto.nome}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="id">ID:</label>
+          <input type="string" className="border-none" id="id" />
+        </div>
+
+        <div className="col-3">
+          <PersonComponent />
+        </div>
+        <span className="col-3" />
+        <div className="col-1">
+          <label htmlFor="data">Data</label>
+          <input className="input-1" type="date" id="data" />
+        </div>
+        <div className="col-2">
+          <ProductListComponent />
         </div>
         <div className="col-1">
-          <label htmlFor="preco">Preço</label>
-          <input className=" input-1 " type="text" id="preco" />
+          <label htmlFor="price">Preço</label>
+          <input className=" input-1 " type="text" id="price" />
         </div>
         <div className="col-1">
-          <label htmlFor="quantidade">Quantidade</label>
-          <input className=" input-1 " type="text" id="quantidade" />
+          <label htmlFor="quantity">Quantidade</label>
+          <input className=" input-1 " type="text" id="quantity" />
         </div>
-        <div id="container-img" className="col-1">
+        <span className="col-3" />
+        <div className="col-1">
           <button
             id="btn-2"
             onClick={(e) => addProductCart(e, produtos, setCarrinhoProdutos)}
@@ -53,7 +48,30 @@ const SaleForm = ({
           </button>
         </div>
       </div>
+      <div id="container-4-col" className="col-8 h-2 my-1 shadow">
+        <div className="col-4 mr-0 bg-primary">
+          <div className="flex-row py-1 bg-secondary radius">
+            <span>Nome</span>
+            <span>Quantidade</span>
+            <span>Valor</span>
+          </div>
+          <div className="px-3 bg-primary p-1 radius">
+            {console.log("carrinho: " + carrinhoProdutos)}
+            {carrinhoProdutos.map((produto) => (
+              <div className="flex-row my-1" key={produto.id}>
+                <span>{produto.productInf.name}</span>
+                <span>{produto.quantity}</span>
+                <span>{produto.paymentValue}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
       <div>
+        <div>
+          <span>Total</span>
+          <span>{total}</span>
+        </div>
         <button
           onClick={(e) => {
             FinalizationRegistrySale(e, entidades, carrinhoProdutos, total);

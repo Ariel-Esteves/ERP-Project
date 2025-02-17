@@ -1,48 +1,48 @@
-import { PostMethod } from "../hooks/useFetch";
+import { getMethod, postMethod } from "../infra/useFetch";
+import { person_url } from "../infra/variables";
 
-export const getEntidade = async () =>
-  (await fetch("http://localhost:8080/api/entidade")).json();
+export const getEntidade = async () => await getMethod(person_url);
 
 export async function saveEntidade(e) {
   e.preventDefault();
+
   const getElId = (id) => document.getElementById(id);
-  const nome = getElId("nome").value.trim();
+  const name = getElId("name").value.trim();
   const cpf = getElId("cpf").value.trim();
   const email = getElId("email").value.trim();
-  const tipo = getElId("tipo").value.trim();
+  const personType = getElId("personType").value.trim();
   const uf = getElId("uf").value.trim();
-  const rua = getElId("rua").value.trim();
-  const cidade = getElId("cidade").value.trim();
+  const street = getElId("street").value.trim();
+  const city = getElId("city").value.trim();
   const cep = getElId("cep").value.trim();
-  const pais = getElId("pais").value.trim();
+  const country = getElId("country").value.trim();
+  const user = localStorage.getItem("user");
 
   try {
     const entidade = {
-      nome,
+      name,
       cpf,
       email,
-      tipo,
-      endereco: { uf, rua, cidade, cep, pais },
+      personType,
+      address: { uf, street, city, cep, country },
+      user,
     };
-
+    console.log(entidade);
     if (
-      !nome ||
+      !name ||
       !cpf ||
       !email ||
-      !tipo ||
+      !personType ||
       !uf ||
-      !rua ||
-      !cidade ||
+      !street ||
+      !city ||
       !cep ||
-      !pais
+      !country
     ) {
       alert("Please fill out all fields correctly.");
       return;
     }
-    const result = await PostMethod(
-      entidade,
-      "http://localhost:8080/api/entidade"
-    );
+    const result = await postMethod(entidade, person_url);
 
     console.log("Entidade saved successfully:", result);
     alert("Entidade saved successfully!");

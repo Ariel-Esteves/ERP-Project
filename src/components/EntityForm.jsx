@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { AuthContext } from "../infra/Context";
 
 const EntityForm = ({ section, setSection, saveEntidade }) => {
+  const { user } = useContext(AuthContext);
   return (
     <form id="form-container" className="ml-0">
       <div className="col-4">
@@ -14,8 +17,8 @@ const EntityForm = ({ section, setSection, saveEntidade }) => {
         style={section != 1 ? { display: "none" } : {}}
       >
         <div className="col-4">
-          <label htmlFor="nome">nome</label>
-          <input type="text" id="nome" />
+          <label htmlFor="name">name</label>
+          <input type="text" id="name" />
         </div>
         <div>
           <label htmlFor="email">Email</label>
@@ -26,8 +29,8 @@ const EntityForm = ({ section, setSection, saveEntidade }) => {
           <input type="text" id="cpf" />
         </div>
         <div>
-          <label htmlFor="tipo">Tipo</label>
-          <input type="text" id="tipo" />
+          <label htmlFor="personType">tipo</label>
+          <input type="text" id="personType" />
         </div>
       </div>
       <div
@@ -40,20 +43,20 @@ const EntityForm = ({ section, setSection, saveEntidade }) => {
           <input type="text" id="uf" />
         </div>
         <div>
-          <label htmlFor="rua">Rua</label>
-          <input type="text" id="rua" />
+          <label htmlFor="street">Street</label>
+          <input type="text" id="street" />
         </div>
         <div>
-          <label htmlFor="cidade">Cidade</label>
-          <input type="text" id="cidade" />
+          <label htmlFor="city">City</label>
+          <input type="text" id="city" />
         </div>
         <div>
           <label htmlFor="cep">CEP</label>
           <input type="text" id="cep" />
         </div>
         <div>
-          <label htmlFor="pais">País</label>
-          <input type="text" id="pais" />
+          <label htmlFor="country">Country</label>
+          <input type="text" id="country" />
         </div>
       </div>
       <div id="section-btn">
@@ -86,7 +89,7 @@ const EntityForm = ({ section, setSection, saveEntidade }) => {
             </button>
           </div>
           <div id="section-btn">
-            <button id="btn-1" onClick={saveEntidade}>
+            <button id="btn-1" onClick={(e) => saveEntidade(e, user)}>
               Save
             </button>
           </div>

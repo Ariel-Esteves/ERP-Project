@@ -10,6 +10,7 @@ import FunctionalityPage from "./pages/FunctionalityPage";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 import RegisterUser from "./pages/RegisterUser";
 import LoginUser from "./pages/LoginUser";
+import ProfilePage from "./pages/ProfilePage";
 
 const RouterApp = () => {
   return (
@@ -28,7 +29,7 @@ const RouterApp = () => {
         element={<ProtectedRoute element={<h1>Not Found</h1>} />}
       />
       <Route
-        path="/sale/:id"
+        path="/venda/:id"
         element={<ProtectedRoute element={<SalePage />} />}
       />
       <Route
@@ -46,6 +47,10 @@ const RouterApp = () => {
       <Route
         path="/stock"
         element={<ProtectedRoute element={<StockPage />} />}
+      />
+      <Route
+        path="/profile"
+        element={<ProtectedRoute element={<ProfilePage />} />}
       />
     </Routes>
   );

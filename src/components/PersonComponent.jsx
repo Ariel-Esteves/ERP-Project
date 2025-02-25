@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getPerson } from "../hooks/RequestApi/personRequest";
 
-const PersonComponent = () => {
+const PersonComponent = ({ personRef }) => {
   const [personList, setPersonList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,13 +33,16 @@ const PersonComponent = () => {
       <select id="person">
         {personList.length > 0 &&
           personList.map((entidade) => (
-            <option key={entidade.id} value={entidade.id}>
+            <option key={entidade.id} value={entidade.id} ref={personRef}>
               {entidade.name}
             </option>
           ))}
       </select>
     </>
   );
+};
+PersonComponent.propTypes = {
+  personRef: PropTypes.object.isRequired,
 };
 
 export default PersonComponent;

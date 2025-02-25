@@ -32,10 +32,8 @@ const SearchEntityComponent = ({ requestMethod }) => {
           </div>
         </div>
       </form>
-      <div id="container-4-col" className="col-4 mx-4 mb-4 bg-primary ">
-        <div className="col-4 radius h-3 p-4" id="container-4-col">
-          {ProductCardComponent(listSearched)}
-        </div>
+      <div className="col-4">
+        <ProductCardComponent listSearched={listSearched} />
       </div>
     </div>
   );

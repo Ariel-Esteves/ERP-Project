@@ -7,10 +7,13 @@ import {
 
 import { person_url } from "../../infra/variables";
 
-async function getPerson() {
-  const data = await getMethod(person_url);
-  console.log("data", data);
-  return data;
+async function getPerson(setData = null) {
+  const response = await getMethod(person_url);
+  if (setData) {
+    setData(response);
+    return;
+  }
+  return response;
 }
 
 async function postPerson(Person) {

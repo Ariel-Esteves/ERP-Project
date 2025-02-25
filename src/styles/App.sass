@@ -29,10 +29,11 @@ $bg-tertiary: gray
 ul
   list-style-type: none
 
+
 #container
   display: grid
-  grid-template-columns: repeat(4, minmax(10rem, 1fr))
-  grid-template-rows: repeat(7, auto)
+  grid-template-columns: repeat(4, 1fr)
+  grid-template-rows: repeat(4, minmax(5rem, 15rem))
   gap: $margin-base-4
 
 #container-6-col
@@ -48,8 +49,6 @@ ul
   grid-template-rows: repeat(3, minmax(10rem, auto)) // Define a minimum number of rows
 
 
-
-
 #container-4-col
   display: grid
   grid-template-columns: repeat(4, 1fr)
@@ -58,7 +57,10 @@ ul
 
 .row-auto
   grid-auto-rows: auto !important
-  
+
+.row-1
+  grid-auto-rows: $heigth !important
+ 
 .gap-0
   gap: 0!important
   

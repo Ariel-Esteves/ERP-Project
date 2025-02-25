@@ -2,11 +2,9 @@ import { useState } from "react";
 import EntityForm from "../components/EntityForm";
 import { getEntidade, saveEntidade } from "../services/EntityService";
 import SearchEntityComponent from "../components/SearchEntityComponent";
-import CarteiraComponent from "../components/CarteiraComponent";
+import CarteiraComponent from "../components/WalletComponent";
 
 const EntityPage = () => {
-  const [section, setSection] = useState(1);
-
   return (
     <>
       <div id="container-4-col">
@@ -22,11 +20,7 @@ const EntityPage = () => {
           </div>
         </div>
         <div className="col-2">
-          <EntityForm
-            section={section}
-            setSection={setSection}
-            saveEntidade={saveEntidade}
-          />
+          <EntityForm saveEntidade={saveEntidade} />
         </div>
       </div>
       <SearchEntityComponent requestMethod={getEntidade} />

@@ -1,7 +1,21 @@
 import PropTypes from "prop-types";
 import { saveProduct } from "../services/ProductService";
-
+import { useRef } from "react";
 const ProductForm = () => {
+  const nameRef = useRef(null);
+  const priceRef = useRef(null);
+  const stockRef = useRef(null);
+
+  const handleSaveProduct = (e) => {
+    e.preventDefault();
+    const product = {
+      name: nameRef.current.value,
+      price: priceRef.current.value,
+      stock: stockRef.current.value,
+    };
+    saveProduct(product);
+  };
+
   return (
     <form action="" id="form-container" className="row-3x col-2 ml-0 mb-0">
       <div className="col-4">
@@ -11,23 +25,23 @@ const ProductForm = () => {
       </div>
       <div className="col-4">
         <label htmlFor="name">Nome</label>
-        <input type="text" id="name" />
+        <input type="text" id="name" ref={nameRef} />
       </div>
       <div className="col-4">
         <label htmlFor="price" className="fs-1">
           Preço
         </label>
-        <input type="text" id="price" />
+        <input type="text" id="price" ref={priceRef} />
       </div>
 
       <div className="col-4">
         <label htmlFor="stock" className="fs-1">
           Estoque
         </label>
-        <input type="number" id="stock" />
+        <input type="number" id="stock" ref={stockRef} />
       </div>
       <div id="section-btn">
-        <button onClick={saveProduct} id="btn-1">
+        <button onClick={handleSaveProduct} id="btn-1">
           Salvar
         </button>
       </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { findWalletByPersonId } from "../hooks/RequestApi/walletRequest";
 
-const CarteiraComponent = ({ wallet_id }) => {
+const WalletComponent = ({ wallet_id }) => {
   const [balance, setBalance] = useState(0);
   const [entry, setEntry] = useState(0);
   const [exit, setExit] = useState(0);
@@ -14,7 +14,7 @@ const CarteiraComponent = ({ wallet_id }) => {
 
   const getPayments = async () => {
     const response = await findWalletByPersonId(wallet_id);
-
+    console.log("payments", response);
     setEntry(movementOperation(response, "in"));
     setExit(movementOperation(response, "out"));
 
@@ -22,7 +22,7 @@ const CarteiraComponent = ({ wallet_id }) => {
   };
 
   useEffect(() => {
-    wallet_id && getPayments();
+    getPayments();
   });
 
   if (wallet_id === undefined) return null;
@@ -62,8 +62,8 @@ const CarteiraComponent = ({ wallet_id }) => {
   );
 };
 
-CarteiraComponent.propTypes = {
-  wallet_id: PropTypes.string.isRequired,
+WalletComponent.propTypes = {
+  wallet_id: PropTypes.number.isRequired,
 };
 
-export default CarteiraComponent;
+export default WalletComponent;

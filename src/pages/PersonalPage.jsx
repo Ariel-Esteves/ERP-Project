@@ -1,4 +1,4 @@
-import CarteiraComponent from "../components/CarteiraComponent";
+import CarteiraComponent from "../components/WalletComponent";
 
 const PersonalPage = () => {
   return (

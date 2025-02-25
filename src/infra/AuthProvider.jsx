@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "./Context";
+import AuthContext from "./AuthContext";
 import { expiration_time } from "./variables";
 
 const AuthProvider = ({ children }) => {

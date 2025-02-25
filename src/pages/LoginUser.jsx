@@ -1,35 +1,27 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { postAuth } from "../services/AuthService";
-import { AuthContext } from "../infra/Context";
+import { PostAuth } from "../services/AuthService";
+import AuthContext from "../infra/AuthContext";
 
-const ButtonLogin = () => {
-  const { saveToken } = useContext(AuthContext);
+const ButtonLogin = ({ user }) => {
+  const { saveToken, removeToken } = useContext(AuthContext);
 
-  const getElId = (id) => document.getElementById(id);
-
-  const postAuthFunc = async (e) => {
-    const { token } = await postAuth(e);
-
-    const user = getElId("login").value.trim();
-    console.log(user);
-
-    saveToken(token, user);
-    console.log("Auth login successfullysss:" + token);
-  };
   return (
     <div id="section-btn">
-      <button id="btn-1" onClick={(e) => postAuthFunc(e)}>
+      <button id="btn-1" onClick={() => PostAuth(user, saveToken, removeToken)}>
         Login
       </button>
     </div>
   );
 };
 ButtonLogin.propTypes = {
-  user: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const LoginUser = () => {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <>
       <div id="container-4-col">
@@ -40,7 +32,12 @@ const LoginUser = () => {
           />
         </div>
         <div className="col-2">
-          <form action="" id="form-container" className="ml-0">
+          <form
+            action=""
+            id="form-container"
+            className="ml-0"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <div className="col-4">
               <span>Cadastro usuário</span>
               <h2>Cadastre-se Agora</h2>
@@ -48,14 +45,24 @@ const LoginUser = () => {
             </div>
             <div className="col-4">
               <label htmlFor="login">login</label>
-              <input type="text" id="login" />
+              <input
+                type="text"
+                id="login"
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+              />
             </div>
             <div className="col-4">
               <label htmlFor="password">Senha</label>
-              <input type="password" id="password" />
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
 
-            <ButtonLogin />
+            <ButtonLogin user={{ login, password }} />
           </form>
         </div>
       </div>

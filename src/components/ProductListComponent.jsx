@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/ProductService";
+import PropTypes from "prop-types";
 
-const ProductListComponent = () => {
+const ProductListComponent = ({ productRef }) => {
   const [productList, setproductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +31,7 @@ const ProductListComponent = () => {
   return (
     <>
       <label htmlFor="product"> Produto</label>
-      <select id="product">
+      <select id="product" ref={productRef}>
         {productList.map((produto) => (
           <option key={produto.id} value={produto.id}>
             {produto.name}
@@ -39,6 +40,9 @@ const ProductListComponent = () => {
       </select>
     </>
   );
+};
+ProductListComponent.propTypes = {
+  productRef: PropTypes.object.isRequired,
 };
 
 export default ProductListComponent;

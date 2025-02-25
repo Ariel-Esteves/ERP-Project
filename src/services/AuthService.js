@@ -1,56 +1,34 @@
-import { getMethod, postMethod } from "../infra/useFetch";
+import { postMethod } from "../infra/useFetch";
 import { auth_url } from "../infra/variables";
-export const getEntidade = async () => await getMethod();
 
-export async function saveAuth(e) {
-  e.preventDefault();
-  const getElId = (id) => document.getElementById(id);
-  const login = getElId("login").value.trim();
-  const password = getElId("password").value.trim();
+const alertFields = alert("Please fill in all fields.");
 
-  try {
-    const auth = {
-      login,
-      password,
-    };
+export async function PostAuth(auth, saveToken, removeToken) {
+  removeToken();
 
-    if (!login || !password) {
-      alert("Please fill out all fields correctly.");
-      return;
-    }
-    const result = await postMethod(auth, auth_url + `/register`);
+  if (!auth.login || !auth.password) alertFields;
 
-    console.log("Entidade saved successfully:", result);
-    alert("Entidade saved successfully!");
-  } catch (error) {
-    console.error("There was a problem with the fetch operation:", error);
-    alert("Failed to save entidade. Please try again.");
-  }
+  const { token } = await postMethod(auth, auth_url + `/login`);
+  console.log("token", token);
+
+  if (token) saveToken(token, auth.login);
+
+  return token;
 }
 
-export async function postAuth(e) {
-  e.preventDefault();
-  const getElId = (id) => document.getElementById(id);
-  const login = getElId("login").value.trim();
-  const password = getElId("password").value.trim();
+export async function SaveAuth(auth, saveToken, removeToken) {
+  removeToken();
+  if (!auth.login || !auth.password) {
+    alertFields;
+    return;
+  }
 
   try {
-    const auth = {
-      login,
-      password,
-    };
-
-    if (!login || !password) {
-      alert("Please fill out all fields correctly.");
-      return;
-    }
-    const result = await postMethod(auth, auth_url + `/login`);
-
-    console.log("Entidade saved successfully:", result);
-    alert("Entidade saved successfully!");
-    return result;
+    const response = await postMethod(auth, auth_url + `/register`);
+    if (response) await PostAuth(auth, saveToken, removeToken);
+    return true;
   } catch (error) {
-    console.error("There was a problem with the fetch operation:", error);
-    alert("Failed to save entidade. Please try again.");
+    console.error("Error status:", error.status);
+    return false;
   }
 }
